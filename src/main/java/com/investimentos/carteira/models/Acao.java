@@ -7,12 +7,13 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
-
 @Entity
 @Data
 @Table(name = "acoes")
 public class Acao {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private String ticker;
@@ -44,6 +45,9 @@ public class Acao {
     public void prePersist() {
         if (this.getDataCadastro() == null) {
             this.setDataCadastro(LocalDateTime.now());
+        }
+        if (setor == null || setor.trim().isEmpty()) {
+            setor = "Setor indefinido";
         }
         this.dataAlteracao = LocalDateTime.now();
         if (this.situacao == null) {
