@@ -36,7 +36,7 @@ public class Transacao {
         }
         this.dataAlteracao = LocalDateTime.now();
         if (this.situacao == null) {
-            this.situacao = Situacao.ATIVO;
+            this.situacao = Situacao.APROVADA;
         }
     }
 

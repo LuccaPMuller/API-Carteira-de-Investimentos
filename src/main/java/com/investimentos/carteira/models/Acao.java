@@ -30,18 +30,6 @@ public class Acao {
     @Enumerated(value = EnumType.STRING)
     private Situacao situacao;
 
-    public Acao() {
-    }
-
-    public Acao(Long id, String ticker, String nome, String setor, LocalDateTime dataCadastro, LocalDateTime dataAlteracao) {
-        this.id = id;
-        this.ticker = ticker;
-        this.nome = nome.toUpperCase();
-        this.setor = setor;
-        this.dataCadastro = dataCadastro;
-        this.dataAlteracao = dataAlteracao;
-    }
-
     @PrePersist
     public void prePersist() {
         if (this.getDataCadastro() == null) {
@@ -50,6 +38,7 @@ public class Acao {
         if (setor == null || setor.trim().isEmpty()) {
             setor = "Setor indefinido";
         }
+        this.ticker = ticker.toUpperCase();
         this.dataAlteracao = LocalDateTime.now();
         if (this.situacao == null) {
             this.situacao = Situacao.ATIVO;
@@ -59,5 +48,6 @@ public class Acao {
     @PreUpdate
     public void preUpdate() {
         this.dataAlteracao = LocalDateTime.now();
+        this.ticker = ticker.toUpperCase();
     }
 }

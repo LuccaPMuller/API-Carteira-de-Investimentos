@@ -1,4 +1,4 @@
-package com.investimentos.carteira.DTOs;
+package com.investimentos.carteira.DTOs.acoes;
 
 import java.util.List;
 

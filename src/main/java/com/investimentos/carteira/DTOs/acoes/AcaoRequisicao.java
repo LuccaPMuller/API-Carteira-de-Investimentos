@@ -1,4 +1,4 @@
-package com.investimentos.carteira.DTOs;
+package com.investimentos.carteira.DTOs.acoes;
 
 import com.investimentos.carteira.enums.Situacao;
 import io.swagger.v3.oas.annotations.media.Schema;

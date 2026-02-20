@@ -1,8 +1,8 @@
 package com.investimentos.carteira.controllers;
 
-import com.investimentos.carteira.DTOs.AcaoAtualiza;
-import com.investimentos.carteira.DTOs.AcaoRequisicao;
-import com.investimentos.carteira.DTOs.AcaoResposta;
+import com.investimentos.carteira.DTOs.acoes.AcaoAtualiza;
+import com.investimentos.carteira.DTOs.acoes.AcaoRequisicao;
+import com.investimentos.carteira.DTOs.acoes.AcaoResposta;
 import com.investimentos.carteira.enums.Situacao;
 import com.investimentos.carteira.exception.http.ResourceNotFoundException;
 import com.investimentos.carteira.services.AcaoService;
@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -7,5 +7,7 @@ public enum Situacao {
     DELETADO,
     INATIVO,
     ATIVO,
-    VENDIDO
+    APROVADA,
+    NEGADA,
+    VENDIDA
 }

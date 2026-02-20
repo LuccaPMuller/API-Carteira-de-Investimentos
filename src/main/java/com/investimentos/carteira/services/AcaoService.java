@@ -1,9 +1,9 @@
 package com.investimentos.carteira.services;
 
-import com.investimentos.carteira.DTOs.AcaoAtualiza;
-import com.investimentos.carteira.DTOs.AcaoMapper;
-import com.investimentos.carteira.DTOs.AcaoRequisicao;
-import com.investimentos.carteira.DTOs.AcaoResposta;
+import com.investimentos.carteira.DTOs.acoes.AcaoAtualiza;
+import com.investimentos.carteira.DTOs.acoes.AcaoMapper;
+import com.investimentos.carteira.DTOs.acoes.AcaoRequisicao;
+import com.investimentos.carteira.DTOs.acoes.AcaoResposta;
 import com.investimentos.carteira.enums.Situacao;
 import com.investimentos.carteira.exception.http.ResourceNotFoundException;
 import com.investimentos.carteira.models.Acao;
