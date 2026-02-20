@@ -4,13 +4,15 @@ import com.investimentos.carteira.DTOs.AcaoAtualiza;
 import com.investimentos.carteira.DTOs.AcaoMapper;
 import com.investimentos.carteira.DTOs.AcaoRequisicao;
 import com.investimentos.carteira.DTOs.AcaoResposta;
+import com.investimentos.carteira.enums.Situacao;
+import com.investimentos.carteira.exception.http.ResourceNotFoundException;
 import com.investimentos.carteira.models.Acao;
 import com.investimentos.carteira.repositories.AcaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class AcaoService {
@@ -25,14 +27,52 @@ public class AcaoService {
     }
 
     @Transactional
-    public AcaoResposta Salvar(AcaoRequisicao acaoRequisicao) {
+    public AcaoResposta salvar(AcaoRequisicao acaoRequisicao) {
         Acao acaoSalvar = acaoRepository.save(acaoMapper.toEntity(acaoRequisicao));
         return acaoMapper.toDto(acaoSalvar);
     }
 
     @Transactional
-    public AcaoResposta Atualizar(AcaoAtualiza acaoAtualiza) {
-        Acao acaoAtualizar = acaoRepository.save(acaoMapper.toEntity(acaoAtualiza));
-        return acaoMapper.toDto(acaoAtualizar);
+    public AcaoResposta atualizar(AcaoAtualiza acaoAtualiza) {
+        Acao acao = acaoRepository.findById(acaoAtualiza.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Ação não encontrada com ID: " + acaoAtualiza.getId()));
+
+        if (acaoAtualiza.getTicker() != null) acao.setTicker(acaoAtualiza.getTicker());
+        if (acaoAtualiza.getNome() != null) acao.setNome(acaoAtualiza.getNome());
+        if (acaoAtualiza.getSetor() != null) acao.setSetor(acaoAtualiza.getSetor());
+        if (acaoAtualiza.getSituacao() != null) acao.setSituacao(acaoAtualiza.getSituacao());
+
+        Acao atualizado = acaoRepository.saveAndFlush(acao);
+        return acaoMapper.toDto(atualizado);
+    }
+
+    @Transactional
+    public Long deletar(Long id) {
+        if (!acaoRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Não é possível deletar: Ação não encontrada.");
+        }
+        acaoRepository.deleteById(id);
+        return id;
+    }
+
+    public Long quantidade() {
+        return acaoRepository.count();
+    }
+
+    public AcaoResposta procurarId(Long id) {
+        return acaoMapper.toDto(acaoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Ação não encontrada com ID: " + id)));
+    }
+
+    public List<AcaoResposta> procurarTicker(String ticker) {
+        return acaoMapper.toDto(acaoRepository.findByTickerContainingIgnoreCase(ticker));
+    }
+
+    public List<AcaoResposta> procurarNome(String nome) {
+        return acaoMapper.toDto(acaoRepository.findByNomeContainingIgnoreCase(nome));
+    }
+
+    public List<AcaoResposta> procurarSituacao(Situacao situacao) {
+        return acaoMapper.toDto(acaoRepository.findBySituacao(situacao));
     }
 }

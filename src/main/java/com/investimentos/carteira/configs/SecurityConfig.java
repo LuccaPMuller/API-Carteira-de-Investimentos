@@ -19,16 +19,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Desabilita CSRF para permitir POST do Postman
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // Libera o Swagger e os Docs do OpenAPI
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
-                        // Por enquanto, libera seus endpoints de Ação para teste
-                        .requestMatchers("/acoes/**").permitAll()
-                        // Qualquer outra requisição precisará de autenticação (se você quiser)
+                        .requestMatchers("/api/**").permitAll()
                         .anyRequest().permitAll()
                 )
-                .headers(headers -> headers.frameOptions(frame -> frame.disable())); // Útil se usar banco H2
+                .headers(headers -> headers.frameOptions(frame -> frame.disable()));
 
         return http.build();
     }

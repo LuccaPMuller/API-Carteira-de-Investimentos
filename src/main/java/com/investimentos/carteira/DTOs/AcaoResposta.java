@@ -11,6 +11,7 @@ public class AcaoResposta {
         private String ticker;
         private String nome;
         private String setor;
+        private LocalDateTime dataAlteracao;
         private LocalDateTime dataCadastro;
         private Situacao situacao;
 }

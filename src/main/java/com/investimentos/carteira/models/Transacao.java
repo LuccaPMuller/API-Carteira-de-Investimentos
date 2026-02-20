@@ -6,21 +6,20 @@ import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table(name = "acoes")
-public class Acao {
-
+@Table(name = "transacoes")
+public class Transacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
-    private String ticker;
-    @Column(nullable = false)
-    private String nome;
-    private String setor;
+    @Column(name = "acao_id", updatable = false)
+    private Long acaoId;
+    private Long quantidade;
+    private BigDecimal preco;
     @CreatedDate
     @Column(name = "dt_cadastro", updatable = false)
     private LocalDateTime dataCadastro;
@@ -30,25 +29,10 @@ public class Acao {
     @Enumerated(value = EnumType.STRING)
     private Situacao situacao;
 
-    public Acao() {
-    }
-
-    public Acao(Long id, String ticker, String nome, String setor, LocalDateTime dataCadastro, LocalDateTime dataAlteracao) {
-        this.id = id;
-        this.ticker = ticker;
-        this.nome = nome.toUpperCase();
-        this.setor = setor;
-        this.dataCadastro = dataCadastro;
-        this.dataAlteracao = dataAlteracao;
-    }
-
     @PrePersist
     public void prePersist() {
         if (this.getDataCadastro() == null) {
             this.setDataCadastro(LocalDateTime.now());
-        }
-        if (setor == null || setor.trim().isEmpty()) {
-            setor = "Setor indefinido";
         }
         this.dataAlteracao = LocalDateTime.now();
         if (this.situacao == null) {

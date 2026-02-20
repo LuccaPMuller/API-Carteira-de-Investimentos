@@ -1,7 +1,6 @@
 package com.investimentos.carteira.DTOs;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.investimentos.carteira.models.Acao;
 import org.mapstruct.Mapper;
@@ -10,7 +9,6 @@ import org.mapstruct.Mapper;
 public interface AcaoMapper {
     //toEntity
     Acao toEntity (AcaoRequisicao acaoRequisicao);
-    Acao toEntity (AcaoAtualiza acaoAtualiza);
     //toDto
     AcaoResposta toDto (Acao acao);
     List<AcaoResposta> toDto (List<Acao> acoes);
